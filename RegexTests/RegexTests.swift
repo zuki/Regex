@@ -18,6 +18,13 @@ class RegexTests: XCTestCase {
         super.tearDown()
     }
     
+    func testExtract() {
+        XCTAssertEqual("abcdefghijk".extract("b.+f"), [["bcdef"]])
+        XCTAssertEqual("abcdefghijk".extract("b.*d(.*)h(.*)k"), [["bcdefghijk", "efg", "ij"]])
+        XCTAssertEqual("ahogezapiyozafugoz".extract("a(.*)z"), [["ahogezapiyozafugoz", "hogezapiyozafugo"]])
+        XCTAssertEqual("ahogezapiyozafugoz".extract("a(.*?)z"), [["ahogez", "hoge"], ["apiyoz", "piyo"], ["afugoz", "fugo"]])
+    }
+    
     func testReplace() {
         XCTAssertEqual("abcdcab".replace("ab", new: "f", mode: FindMode.RegularExpression), "fcdcf")
         XCTAssertEqual("abcdcab".replace("^ab", new: "f", mode: FindMode.RegularExpression), "fcdcab")
