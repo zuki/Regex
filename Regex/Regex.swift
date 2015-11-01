@@ -35,6 +35,20 @@ extension String {
         return allMatches
     }
     
+    func find(str: String, mode: FindMode) -> Bool {
+        switch mode {
+        case .Literal:
+            return self.containsString(str)
+        case .CaseInsensitive:
+            return self.lowercaseString.containsString(str.lowercaseString)
+        case .RegularExpression:
+            guard let regex = try? NSRegularExpression(pattern: str, options: .AnchorsMatchLines) else {
+                return false
+            }
+            return regex.firstMatchInString(self, options: NSMatchingOptions(rawValue: 0), range: NSRange(location: 0, length: (self as NSString).length)) != nil
+        }
+    }
+    
     func replace(old: String, new: String, mode: FindMode) -> String {
         let options = [
             NSStringCompareOptions.RegularExpressionSearch,
