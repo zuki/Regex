@@ -35,6 +35,34 @@ extension String {
         return allMatches
     }
     
+    func split(str: String, mode: FindMode) -> [String] {
+        switch mode {
+        case .Literal:
+            return self.componentsSeparatedByString(str)
+        case .CaseInsensitive:
+            let toLow = self.replace(str, new: str.lowercaseString, mode: .CaseInsensitive)
+            return toLow.componentsSeparatedByString(str.lowercaseString)
+        case .RegularExpression:
+            var splitResult = [String]()
+            guard let regex = try? NSRegularExpression(pattern: str, options: .AnchorsMatchLines) else {
+                return []
+            }
+            let nsStr = self as NSString
+            var start = 0
+            regex.enumerateMatchesInString(self, options: NSMatchingOptions(rawValue: 0), range: NSRange(location: 0, length: nsStr.length)) {
+                (result: NSTextCheckingResult?, flags, ptr) -> Void in
+                if let result = result {
+                    let range = NSRange(location: start, length: result.range.location - start)
+                    splitResult.append(nsStr.substringWithRange(range))
+                    start = result.range.location + result.range.length
+                }
+            }
+            splitResult.append(nsStr.substringFromIndex(start))
+            return splitResult
+        }
+        
+    }
+    
     func find(str: String, mode: FindMode) -> Bool {
         switch mode {
         case .Literal:

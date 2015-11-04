@@ -25,6 +25,15 @@ class RegexTests: XCTestCase {
         XCTAssertEqual("ahogezapiyozafugoz".extract("a(.*?)z"), [["ahogez", "hoge"], ["apiyoz", "piyo"], ["afugoz", "fugo"]])
     }
     
+    func testSplit() {
+        XCTAssertEqual("abcdefghijk".split("bc", mode: FindMode.Literal), ["a", "defghijk"])
+        XCTAssertEqual("abspcdspefspg".split("sp", mode: FindMode.Literal), ["ab", "cd", "ef", "g"])
+        XCTAssertEqual("abSPcdSpefsPg".split("Sp", mode: FindMode.CaseInsensitive), ["ab", "cd", "ef", "g"])
+        XCTAssertEqual("absapcdsbpefscpg".split("s[a-z]p", mode: FindMode.RegularExpression), ["ab", "cd", "ef", "g"])
+        XCTAssertEqual("abspcds1a2f3pefse2iapg".split("s[a-z0-9]*p", mode: FindMode.RegularExpression), ["ab", "g"])
+        XCTAssertEqual("abspcds1a2f3pefse2iapg".split("s[a-z0-9]*?p", mode: FindMode.RegularExpression), ["ab", "cd", "ef", "g"])
+    }
+    
     func testFind() {
         XCTAssertEqual("abcdefghijk".find("bcd", mode: FindMode.Literal), true)
         XCTAssertEqual("abcdefghijk".find("bed", mode: FindMode.Literal), false)
