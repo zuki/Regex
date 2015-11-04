@@ -8,10 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		77678EEE1BD662760071AD06 /* Regex.h in Headers */ = {isa = PBXBuildFile; fileRef = 77678EED1BD662760071AD06 /* Regex.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		77678EF51BD662760071AD06 /* Regex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77678EEA1BD662760071AD06 /* Regex.framework */; settings = {ASSET_TAGS = (); }; };
+		77678EF51BD662760071AD06 /* Regex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77678EEA1BD662760071AD06 /* Regex.framework */; };
 		77678EFA1BD662760071AD06 /* RegexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77678EF91BD662760071AD06 /* RegexTests.swift */; };
-		77678F051BD664820071AD06 /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77678F041BD664820071AD06 /* Regex.swift */; settings = {ASSET_TAGS = (); }; };
-		77678F061BD666CE0071AD06 /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77678F041BD664820071AD06 /* Regex.swift */; settings = {ASSET_TAGS = (); }; };
+		77678F051BD664820071AD06 /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77678F041BD664820071AD06 /* Regex.swift */; };
+		77678F061BD666CE0071AD06 /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77678F041BD664820071AD06 /* Regex.swift */; };
+		7772ED581BE993B8008DDF78 /* Pattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772ED571BE993B8008DDF78 /* Pattern.swift */; };
+		7772ED5A1BE9A1E5008DDF78 /* PatternTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772ED591BE9A1E5008DDF78 /* PatternTests.swift */; };
+		7772ED5B1BE9A283008DDF78 /* Pattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772ED571BE993B8008DDF78 /* Pattern.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +35,8 @@
 		77678EF91BD662760071AD06 /* RegexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexTests.swift; sourceTree = "<group>"; };
 		77678EFB1BD662760071AD06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77678F041BD664820071AD06 /* Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
+		7772ED571BE993B8008DDF78 /* Pattern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pattern.swift; sourceTree = "<group>"; };
+		7772ED591BE9A1E5008DDF78 /* PatternTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatternTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +82,7 @@
 				77678EED1BD662760071AD06 /* Regex.h */,
 				77678EEF1BD662760071AD06 /* Info.plist */,
 				77678F041BD664820071AD06 /* Regex.swift */,
+				7772ED571BE993B8008DDF78 /* Pattern.swift */,
 			);
 			path = Regex;
 			sourceTree = "<group>";
@@ -85,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				77678EF91BD662760071AD06 /* RegexTests.swift */,
+				7772ED591BE9A1E5008DDF78 /* PatternTests.swift */,
 				77678EFB1BD662760071AD06 /* Info.plist */,
 			);
 			path = RegexTests;
@@ -198,6 +205,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7772ED581BE993B8008DDF78 /* Pattern.swift in Sources */,
 				77678F051BD664820071AD06 /* Regex.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,6 +216,8 @@
 			files = (
 				77678EFA1BD662760071AD06 /* RegexTests.swift in Sources */,
 				77678F061BD666CE0071AD06 /* Regex.swift in Sources */,
+				7772ED5B1BE9A283008DDF78 /* Pattern.swift in Sources */,
+				7772ED5A1BE9A1E5008DDF78 /* PatternTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +395,7 @@
 				77678F001BD662760071AD06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		77678F011BD662760071AD06 /* Build configuration list for PBXNativeTarget "RegexTests" */ = {
 			isa = XCConfigurationList;
@@ -393,6 +404,7 @@
 				77678F031BD662760071AD06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
