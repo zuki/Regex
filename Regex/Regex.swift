@@ -8,13 +8,13 @@
 
 import Foundation
 
-enum FindMode {
+public enum FindMode {
     case RegularExpression
     case Literal
     case CaseInsensitive
 }
 
-extension String {
+public extension String {
     func extract(pattern: String, options: NSRegularExpressionOptions = .AnchorsMatchLines) -> [[String]] {
         var allMatches = [[String]]()
         guard let regex = try? NSRegularExpression(pattern: pattern, options: options) else {
@@ -34,8 +34,8 @@ extension String {
         }
         return allMatches
     }
-    
-    func split(str: String, mode: FindMode) -> [String] {
+
+    public func split(str: String, mode: FindMode) -> [String] {
         switch mode {
         case .Literal:
             return self.componentsSeparatedByString(str)
@@ -60,10 +60,10 @@ extension String {
             splitResult.append(nsStr.substringFromIndex(start))
             return splitResult
         }
-        
+
     }
-    
-    func find(str: String, mode: FindMode) -> Bool {
+
+    public func find(str: String, mode: FindMode) -> Bool {
         switch mode {
         case .Literal:
             return self.containsString(str)
@@ -76,8 +76,8 @@ extension String {
             return regex.firstMatchInString(self, options: NSMatchingOptions(rawValue: 0), range: NSRange(location: 0, length: (self as NSString).length)) != nil
         }
     }
-    
-    func replace(old: String, new: String, mode: FindMode) -> String {
+
+    public func replace(old: String, new: String, mode: FindMode) -> String {
         let options = [
             NSStringCompareOptions.RegularExpressionSearch,
             NSStringCompareOptions.LiteralSearch,
