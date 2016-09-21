@@ -19,48 +19,50 @@ class RegexTests: XCTestCase {
     }
     
     func testExtract() {
-        XCTAssertEqual("abcdefghijk".extract("b.+f"), [["bcdef"]])
-        XCTAssertEqual("abcdefghijk".extract("b.*d(.*)h(.*)k"), [["bcdefghijk", "efg", "ij"]])
-        XCTAssertEqual("ahogezapiyozafugoz".extract("a(.*)z"), [["ahogezapiyozafugoz", "hogezapiyozafugo"]])
-        XCTAssertEqual("ahogezapiyozafugoz".extract("a(.*?)z"), [["ahogez", "hoge"], ["apiyoz", "piyo"], ["afugoz", "fugo"]])
+        // FIXME: Cannot invoke 'XCTAssertEqual' with an argument list of type '([[String]], [Array<String>])'
+        //   Like: https://bugs.swift.org/browse/SR-2284
+        XCTAssertEqual("abcdefghijk".extract("b.+f")[0], [["bcdef"]][0])
+        XCTAssertEqual("abcdefghijk".extract("b.*d(.*)h(.*)k")[0], [["bcdefghijk", "efg", "ij"]][0])
+        XCTAssertEqual("ahogezapiyozafugoz".extract("a(.*)z")[0], [["ahogezapiyozafugoz", "hogezapiyozafugo"]][0])
+        XCTAssertEqual("ahogezapiyozafugoz".extract("a(.*?)z")[0], [["ahogez", "hoge"], ["apiyoz", "piyo"], ["afugoz", "fugo"]][0])
     }
     
     func testSplit() {
-        XCTAssertEqual("abcdefghijk".split("bc", mode: FindMode.Literal), ["a", "defghijk"])
-        XCTAssertEqual("abspcdspefspg".split("sp", mode: FindMode.Literal), ["ab", "cd", "ef", "g"])
-        XCTAssertEqual("abSPcdSpefsPg".split("Sp", mode: FindMode.CaseInsensitive), ["ab", "cd", "ef", "g"])
-        XCTAssertEqual("absapcdsbpefscpg".split("s[a-z]p", mode: FindMode.RegularExpression), ["ab", "cd", "ef", "g"])
-        XCTAssertEqual("abspcds1a2f3pefse2iapg".split("s[a-z0-9]*p", mode: FindMode.RegularExpression), ["ab", "g"])
-        XCTAssertEqual("abspcds1a2f3pefse2iapg".split("s[a-z0-9]*?p", mode: FindMode.RegularExpression), ["ab", "cd", "ef", "g"])
+        XCTAssertEqual("abcdefghijk".split("bc", mode: FindMode.literal), ["a", "defghijk"])
+        XCTAssertEqual("abspcdspefspg".split("sp", mode: FindMode.literal), ["ab", "cd", "ef", "g"])
+        XCTAssertEqual("abSPcdSpefsPg".split("Sp", mode: FindMode.caseInsensitive), ["ab", "cd", "ef", "g"])
+        XCTAssertEqual("absapcdsbpefscpg".split("s[a-z]p", mode: FindMode.regularExpression), ["ab", "cd", "ef", "g"])
+        XCTAssertEqual("abspcds1a2f3pefse2iapg".split("s[a-z0-9]*p", mode: FindMode.regularExpression), ["ab", "g"])
+        XCTAssertEqual("abspcds1a2f3pefse2iapg".split("s[a-z0-9]*?p", mode: FindMode.regularExpression), ["ab", "cd", "ef", "g"])
     }
     
     func testFind() {
-        XCTAssertEqual("abcdefghijk".find("bcd", mode: FindMode.Literal), true)
-        XCTAssertEqual("abcdefghijk".find("bed", mode: FindMode.Literal), false)
-        XCTAssertEqual("abCdefghijk".find("BcD", mode: FindMode.CaseInsensitive), true)
-        XCTAssertEqual("abCdefghijk".find("BED", mode: FindMode.CaseInsensitive), false)
-        XCTAssertEqual("abcdefghijk".find("b.d", mode: FindMode.RegularExpression), true)
-        XCTAssertEqual("abcdefghijk".find("a.*k", mode: FindMode.RegularExpression), true)
-        XCTAssertEqual("abcdefghijk".find("a.d", mode: FindMode.RegularExpression), false)
+        XCTAssertEqual("abcdefghijk".find("bcd", mode: FindMode.literal), true)
+        XCTAssertEqual("abcdefghijk".find("bed", mode: FindMode.literal), false)
+        XCTAssertEqual("abCdefghijk".find("BcD", mode: FindMode.caseInsensitive), true)
+        XCTAssertEqual("abCdefghijk".find("BED", mode: FindMode.caseInsensitive), false)
+        XCTAssertEqual("abcdefghijk".find("b.d", mode: FindMode.regularExpression), true)
+        XCTAssertEqual("abcdefghijk".find("a.*k", mode: FindMode.regularExpression), true)
+        XCTAssertEqual("abcdefghijk".find("a.d", mode: FindMode.regularExpression), false)
     }
     
     func testReplace() {
-        XCTAssertEqual("abcdcab".replace("ab", new: "f", mode: FindMode.RegularExpression), "fcdcf")
-        XCTAssertEqual("abcdcab".replace("^ab", new: "f", mode: FindMode.RegularExpression), "fcdcab")
-        XCTAssertEqual("a334a".replace("\\d+", new: "han", mode: FindMode.RegularExpression), "ahana")
-        XCTAssertEqual("abcdefg".replace("[ceg]", new: "h", mode: FindMode.RegularExpression), "abhdhfh")
-        XCTAssertEqual("AbCdEfG".replace("[a-z]", new: "h", mode: FindMode.RegularExpression), "AhChEhG")
-        XCTAssertEqual("abc\ndef".replace(".+", new: "h", mode: FindMode.RegularExpression), "h\nh")
-        XCTAssertEqual("abc def".replace(".+", new: "h", mode: FindMode.RegularExpression), "h")
-        XCTAssertEqual("abc\ndef".replace("[\\s]+", new: "h", mode: FindMode.RegularExpression), "abchdef")
-        XCTAssertEqual("abc\ndef".replace("[a-z\\n]+", new: "h", mode: FindMode.RegularExpression), "h")
-        XCTAssertEqual("\n \t \n".replace("\\s", new: "c", mode: FindMode.RegularExpression), "ccccc")
-        XCTAssertEqual("\n \t \n".replace(" ", new: "c", mode: FindMode.RegularExpression), "\nc\tc\n")
-        XCTAssertEqual("abcdefg".replace("a.c", new: "hhh", mode: FindMode.RegularExpression), "hhhdefg")
-        XCTAssertEqual("abcdefg".replace("b.*", new: "hhh", mode: FindMode.RegularExpression), "ahhh")
-        XCTAssertEqual("abcdefg".replace("b.*?", new: "hhh", mode: FindMode.RegularExpression), "ahhhcdefg")
-        XCTAssertEqual("abcdefg".replace("abc", new: "hhh", mode: FindMode.Literal), "hhhdefg")
-        XCTAssertEqual("aBcdefg".replace("abc", new: "hhh", mode: FindMode.Literal), "aBcdefg")
-        XCTAssertEqual("aBcdefg".replace("abc", new: "hHh", mode: FindMode.CaseInsensitive), "hHhdefg")
+        XCTAssertEqual("abcdcab".replace("ab", new: "f", mode: FindMode.regularExpression), "fcdcf")
+        XCTAssertEqual("abcdcab".replace("^ab", new: "f", mode: FindMode.regularExpression), "fcdcab")
+        XCTAssertEqual("a334a".replace("\\d+", new: "han", mode: FindMode.regularExpression), "ahana")
+        XCTAssertEqual("abcdefg".replace("[ceg]", new: "h", mode: FindMode.regularExpression), "abhdhfh")
+        XCTAssertEqual("AbCdEfG".replace("[a-z]", new: "h", mode: FindMode.regularExpression), "AhChEhG")
+        XCTAssertEqual("abc\ndef".replace(".+", new: "h", mode: FindMode.regularExpression), "h\nh")
+        XCTAssertEqual("abc def".replace(".+", new: "h", mode: FindMode.regularExpression), "h")
+        XCTAssertEqual("abc\ndef".replace("[\\s]+", new: "h", mode: FindMode.regularExpression), "abchdef")
+        XCTAssertEqual("abc\ndef".replace("[a-z\\n]+", new: "h", mode: FindMode.regularExpression), "h")
+        XCTAssertEqual("\n \t \n".replace("\\s", new: "c", mode: FindMode.regularExpression), "ccccc")
+        XCTAssertEqual("\n \t \n".replace(" ", new: "c", mode: FindMode.regularExpression), "\nc\tc\n")
+        XCTAssertEqual("abcdefg".replace("a.c", new: "hhh", mode: FindMode.regularExpression), "hhhdefg")
+        XCTAssertEqual("abcdefg".replace("b.*", new: "hhh", mode: FindMode.regularExpression), "ahhh")
+        XCTAssertEqual("abcdefg".replace("b.*?", new: "hhh", mode: FindMode.regularExpression), "ahhhcdefg")
+        XCTAssertEqual("abcdefg".replace("abc", new: "hhh", mode: FindMode.literal), "hhhdefg")
+        XCTAssertEqual("aBcdefg".replace("abc", new: "hhh", mode: FindMode.literal), "aBcdefg")
+        XCTAssertEqual("aBcdefg".replace("abc", new: "hHh", mode: FindMode.caseInsensitive), "hHhdefg")
     }
 }

@@ -18,10 +18,10 @@ class RatternTests: XCTestCase {
     }
     
     func testEmail() {
-        XCTAssert("hoge@hoge.com".find(Pattern.email, mode: FindMode.RegularExpression))
-        XCTAssert("hoge_123+12@hoge.com".find(Pattern.email, mode: FindMode.RegularExpression))
-        XCTAssertFalse("hoge_123+12hoge.com".find(Pattern.email, mode: FindMode.RegularExpression))
-        XCTAssertFalse("hoge_123+12hoge.com".find(Pattern.email, mode: FindMode.RegularExpression))
-        XCTAssertFalse("hoge_123+12@hoge".find(Pattern.email, mode: FindMode.RegularExpression))
+        XCTAssert("hoge@hoge.com".find(Pattern.email, mode: FindMode.regularExpression))
+        XCTAssert("hoge_123+12@hoge.com".find(Pattern.email, mode: FindMode.regularExpression))
+        XCTAssertFalse("hoge_123+12hoge.com".find(Pattern.email, mode: FindMode.regularExpression))
+        XCTAssertFalse("hoge_123+12hoge.com".find(Pattern.email, mode: FindMode.regularExpression))
+        XCTAssertFalse("hoge_123+12@hoge".find(Pattern.email, mode: FindMode.regularExpression))
     }
 }
